@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,41 +27,33 @@ public class ContactList {
 
     public void sort(int sortBy)
     {
-        if(sortBy == 0)
+        Person tmp = null;
+        String tmp1 =  null;
+        String tmp2 = null;
+        for(int i = contacts.size(); i > 0; i--)
         {
-            for(int i = 0; i < contacts.size(); i++)
+            for(int j = 0; j < i-1; j++)
             {
-                if(contacts.get(i).getFirstName().compareTo(contacts.get(i+1).getFirstName()) > 0)
+                if(sortBy == 0)
                 {
-                    Person temp = contacts.get(i+1);
-                    contacts.set(i+1,contacts.get(i));
-                    contacts.set(i,temp);
+                    tmp1 = contacts.get(j).getFirstName();
+                    tmp2 = contacts.get(j+1).getFirstName();
                 }
-            }
-        }
-
-        if(sortBy == 1)
-        {
-            for(int i = 0; i < contacts.size(); i++)
-            {
-                if(contacts.get(i).getLastName().compareTo(contacts.get(i+1).getLastName()) > 0)
+                else if (sortBy == 1)
                 {
-                    Person temp = contacts.get(i+1);
-                    contacts.set(i+1,contacts.get(i));
-                    contacts.set(i,temp);
+                    tmp1 = contacts.get(j).getLastName();
+                    tmp2 = contacts.get(j+1).getLastName();
                 }
-            }
-        }
-
-        if(sortBy == 2)
-        {
-            for(int i = 0; i < contacts.size(); i++)
-            {
-                if(contacts.get(i).getPhoneNumber().compareTo(contacts.get(i+1).getPhoneNumber()) > 0)
+                else if (sortBy == 2)
                 {
-                    Person temp = contacts.get(i+1);
-                    contacts.set(i+1,contacts.get(i));
-                    contacts.set(i,temp);
+                    tmp1 = contacts.get(j).getPhoneNumber();
+                    tmp2 = contacts.get(j+1).getPhoneNumber();
+                }
+                if(tmp1.compareTo(tmp2) > 0)
+                {
+                    tmp = contacts.get(j);
+                    contacts.set(j+1,contacts.get(j));
+                    contacts.set(j,tmp);
                 }
             }
         }
@@ -102,113 +95,117 @@ public class ContactList {
         return null;
     }
 
-    public Student listStudents()
+    public void listStudents()
     {
-        ArrayList<Student> listStudents = new ArrayList<Student>();
         for(int i = 0; i < contacts.size(); i++)
         {
             if(contacts.get(i) instanceof Student)
             {
-                listStudents.add((Student) contacts.get(i));
+                System.out.println(contacts.get(i).toString());
             }
         }
-
-        for(int i = 0; i < listStudents.size(); i++)
-        {
-            return listStudents.get(i);
-        }
-        return null;
     }
 
     public void run()
     {
         Scanner s = new Scanner(System.in);
-        System.out.println("Menu: ");
-        System.out.println("1. Add Contact");
-        System.out.println("2. List All Contacts By First Name");
-        System.out.println("3. List All Contacts By Last Name");
-        System.out.println("4. List ALl Contacts By Phone Number");
-        System.out.println("5. List ALl Students");
-        System.out.println("6. Search By First Name");
-        System.out.println("7. Search By last Name");
-        System.out.println("8. Search By Phone Number");
-        System.out.println("9. Exit");
-        if(s.nextLine().equals("1"))
+        String firstName, lastName, phoneNumber, tclass;
+        int grade;
+        Person ptemp = null;
+        int menuchoice;
+        do
         {
-            System.out.println("Select a type of contact to add: ");
-            System.out.println("1. Student");
-            System.out.println("2. Teacher");
-            String contactType = s.nextLine();
-            System.out.println("Please fill in the following information");
-            System.out.println("First Name: ");
-            String firstName = s.nextLine();
-            System.out.println("Last Name: ");
-            String lastName = s.nextLine();
-            System.out.println("Phone Number: ");
-            String phoneNumber = s.nextLine();
-            if(contactType.equals("1"))
+            System.out.println("Menu: ");
+            System.out.println("1. Add Contact");
+            System.out.println("2. List All Contacts By First Name");
+            System.out.println("3. List All Contacts By Last Name");
+            System.out.println("4. List ALl Contacts By Phone Number");
+            System.out.println("5. List ALl Students");
+            System.out.println("6. Search By First Name");
+            System.out.println("7. Search By last Name");
+            System.out.println("8. Search By Phone Number");
+            System.out.println("9. Exit");
+            menuchoice = s.nextInt();
+            s.nextLine();
+            if(menuchoice == 1)
             {
-                System.out.println("Grade: ");
-                String grade = s.nextLine();
+                System.out.println("Select a type of contact to add: ");
+                System.out.println("1. Student");
+                System.out.println("2. Teacher");
+                String contactType = s.nextLine();
+                System.out.println("Please fill in the following information");
+                System.out.println("First Name: ");
+                firstName = s.nextLine();
+                System.out.println("Last Name: ");
+                lastName = s.nextLine();
+                System.out.println("Phone Number: ");
+                phoneNumber = s.nextLine();
+                if(contactType.equals("1"))
+                {
+                    System.out.println("Grade: ");
+                    grade = s.nextInt();
+                    ptemp = new Student(firstName, lastName, phoneNumber, grade);
+                }
+                else if (contactType.equals("2"))
+                {
+                    System.out.println("Class: ");
+                    tclass = s.nextLine();
+                    ptemp = new Teacher(firstName, lastName, phoneNumber, tclass);
+                }
+                addContact(ptemp);
             }
-            else if (contactType.equals("2"))
+            if(menuchoice == 2)
             {
-                System.out.println("Class: ");
-                String tclass = s.nextLine();
+                sort(1);
             }
-        }
-        if(s.nextLine().equals("2"))
-        {
-            sort(1);
-        }
-        if(s.nextLine().equals("3"))
-        {
-            sort(2);
-        }
-        if(s.nextLine().equals("4"))
-        {
-            sort(3);
-        }
-        if(s.nextLine().equals("5"))
-        {
-            listStudents();
-        }
-        if(s.nextLine().equals("6"))
-        {
-            System.out.println("Enter a name: ");
-            searchByFirstName(s.nextLine());
-            if(searchByFirstName(s.nextLine()).equals(-1))
+            if(menuchoice == 3)
             {
-                System.out.println(s.nextLine() + "is not in the list");
+                sort(2);
             }
-        }
-        if(s.nextLine().equals("7"))
-        {
-            System.out.println("Enter a name: ");
-            searchByLastName(s.nextLine());
-            if(searchByLastName(s.nextLine()).equals(-1))
+            if(menuchoice == 4)
             {
-                System.out.println(s.nextLine() + "is not in the list");
+                sort(3);
             }
-        }
-        if(s.nextLine().equals("8"))
-        {
-            System.out.println("Enter a phone number: ");
-            searchByPhoneNumber(s.nextLine());
-            if(searchByPhoneNumber(s.nextLine()).equals(-1))
+            if(menuchoice == 5)
             {
-                System.out.println(s.nextLine() + "is not in the list");
+                listStudents();
             }
-        }
-        if(s.nextLine().equals("9"))
-        {
-            System.out.println("Goodbye");
-        }
-    }
+            if(menuchoice == 6)
+            {
+                System.out.println("Enter a name: ");
+                searchByFirstName(s.nextLine());
+                if(searchByFirstName(s.nextLine()).equals(-1))
+                {
+                    System.out.println(s.nextLine() + "is not in the list");
+                }
+            }
+            if(menuchoice == 7)
+            {
+                System.out.println("Enter a name: ");
+                searchByLastName(s.nextLine());
+                if(searchByLastName(s.nextLine()).equals(-1))
+                {
+                    System.out.println(s.nextLine() + "is not in the list");
+                }
+            }
+            if(menuchoice == 8)
+            {
+                System.out.println("Enter a phone number: ");
+                searchByPhoneNumber(s.nextLine());
+                if(searchByPhoneNumber(s.nextLine()).equals(-1))
+                {
+                    System.out.println(s.nextLine() + "is not in the list");
+                }
+            }
+        }while(menuchoice != 0);
 
-    public static void main (String args[])
+    }
+    public static void main(String args[])
     {
         ContactList nContactList = new ContactList();
         nContactList.run();
     }
 }
+
+
+
