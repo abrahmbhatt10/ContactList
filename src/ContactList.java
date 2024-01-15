@@ -135,8 +135,27 @@ public class ContactList {
         System.out.println("9. Exit");
         if(s.nextLine().equals(1))
         {
-            System.out.println("Add a contact: ");
-            addContact();
+            System.out.println("Select a type of contact to add: ");
+            System.out.println("1. Student");
+            System.out.println("2. Teacher");
+            String contactType = s.nextLine();
+            System.out.println("Please fill in the following information");
+            System.out.println("First Name: ");
+            String firstName = s.nextLine();
+            System.out.println("Last Name: ");
+            String lastName = s.nextLine();
+            System.out.println("Phone Number: ");
+            String phoneNumber = s.nextLine();
+            if(contactType.equals("1"))
+            {
+                System.out.println("Grade: ");
+                String grade = s.nextLine();
+            }
+            else if (contactType.equals("2"))
+            {
+                System.out.println("Class: ");
+                String tclass = s.nextLine();
+            }
         }
         if(s.nextLine().equals(2))
         {
@@ -185,10 +204,6 @@ public class ContactList {
         {
             System.out.println("Goodbye");
         }
-
-
-
-
     }
 
 
