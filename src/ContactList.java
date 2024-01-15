@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class ContactList {
     private ArrayList<Person> contacts;
 
-    public ContactList(ArrayList<Person> contacts) {
+    public ContactList() {
         this.contacts = new ArrayList<Person>();
     }
 
@@ -21,7 +21,7 @@ public class ContactList {
     public void printContacts()
     {
         for(Person p: contacts)
-        System.out.println(p);
+        System.out.println(p.toString());
     }
 
     public void sort(int sortBy)
@@ -208,8 +208,7 @@ public class ContactList {
 
     public static void main (String args[])
     {
-        ArrayList<Person> personArr = new ArrayList<Person>();
-        ContactList nContactList = new ContactList(personArr);
+        ContactList nContactList = new ContactList();
         nContactList.run();
     }
 }
