@@ -1,30 +1,37 @@
+//imports needed java classes to use scanner and arraylists
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ContactList {
+    //Initializes instance variable
     private ArrayList<Person> contacts;
 
+    //constructs contactlist by initializing instance variable contact list
     public ContactList() {
         this.contacts = new ArrayList<Person>();
     }
 
+    //returns contacts
     public ArrayList<Person> getContacts()
     {
         return contacts;
     }
 
+    //adds new contact
     public void addContact(Person contact)
     {
         contacts.add(contact);
     }
 
+    //prints contacts
     public void printContacts()
     {
         for(Person p: contacts)
         System.out.println(p.toString());
     }
 
+    //sorts by firstname, lastname, or phonenumber
     public void sort(int sortBy)
     {
         Person tmp = null;
@@ -52,13 +59,14 @@ public class ContactList {
                 if(tmp1.compareTo(tmp2) > 0)
                 {
                     tmp = contacts.get(j);
-                    contacts.set(j+1,contacts.get(j));
-                    contacts.set(j,tmp);
+                    contacts.set(j,contacts.get(j+1));
+                    contacts.set(j+1,tmp);
                 }
             }
         }
     }
 
+    //searches in contact list by firstname
     public Person searchByFirstName(String firstName)
     {
         for(int i = 0; i < contacts.size(); i++)
@@ -71,6 +79,7 @@ public class ContactList {
         return null;
     }
 
+    //searches in contact list by last name
     public Person searchByLastName(String lastName)
     {
         for(int i = 0; i < contacts.size(); i++)
@@ -83,11 +92,12 @@ public class ContactList {
         return null;
     }
 
+    //searches in contact list by phone number
     public Person searchByPhoneNumber(String phoneNumber)
     {
         for(int i = 0; i < contacts.size(); i++)
         {
-            if(contacts.get(i).getLastName().equals(phoneNumber))
+            if(contacts.get(i).getPhoneNumber().equals(phoneNumber))
             {
                 return contacts.get(i);
             }
@@ -95,6 +105,7 @@ public class ContactList {
         return null;
     }
 
+    //lists students in contact list
     public void listStudents()
     {
         for(int i = 0; i < contacts.size(); i++)
@@ -106,10 +117,20 @@ public class ContactList {
         }
     }
 
+    //lists persons in contact list
+    public void listPersons()
+    {
+        for(int i = 0; i < contacts.size(); i++)
+        {
+            System.out.println(contacts.get(i).toString());
+        }
+    }
+
+    //runs program with choices and scans user input
     public void run()
     {
         Scanner s = new Scanner(System.in);
-        String firstName, lastName, phoneNumber, tclass;
+        String firstName, lastName, phoneNumber, tclass, searchStr;
         int grade;
         Person ptemp = null;
         int menuchoice;
@@ -124,7 +145,7 @@ public class ContactList {
             System.out.println("6. Search By First Name");
             System.out.println("7. Search By last Name");
             System.out.println("8. Search By Phone Number");
-            System.out.println("9. Exit");
+            System.out.println("0. Exit");
             menuchoice = s.nextInt();
             s.nextLine();
             if(menuchoice == 1)
@@ -156,15 +177,18 @@ public class ContactList {
             }
             if(menuchoice == 2)
             {
-                sort(1);
+                sort(0);
+                listPersons();
             }
             if(menuchoice == 3)
             {
-                sort(2);
+                sort(1);
+                listPersons();
             }
             if(menuchoice == 4)
             {
-                sort(3);
+                sort(2);
+                listPersons();
             }
             if(menuchoice == 5)
             {
@@ -173,33 +197,50 @@ public class ContactList {
             if(menuchoice == 6)
             {
                 System.out.println("Enter a name: ");
-                searchByFirstName(s.nextLine());
-                if(searchByFirstName(s.nextLine()).equals(-1))
+                searchStr = s.nextLine();
+                ptemp = searchByFirstName(searchStr);
+                if(ptemp == null)
                 {
-                    System.out.println(s.nextLine() + "is not in the list");
+                    System.out.println(searchStr + "is not in the list");
+                }
+                else
+                {
+                    System.out.println(ptemp.toString());
                 }
             }
             if(menuchoice == 7)
             {
                 System.out.println("Enter a name: ");
-                searchByLastName(s.nextLine());
-                if(searchByLastName(s.nextLine()).equals(-1))
+                searchStr = s.nextLine();
+                ptemp = searchByLastName(searchStr);
+                if(ptemp == null)
                 {
-                    System.out.println(s.nextLine() + "is not in the list");
+                    System.out.println(searchStr + "is not in the list");
+                }
+                else
+                {
+                    System.out.println(ptemp.toString());
                 }
             }
             if(menuchoice == 8)
             {
                 System.out.println("Enter a phone number: ");
-                searchByPhoneNumber(s.nextLine());
-                if(searchByPhoneNumber(s.nextLine()).equals(-1))
+                searchStr = s.nextLine();
+                ptemp = searchByPhoneNumber(searchStr);
+                if(ptemp == null)
                 {
                     System.out.println(s.nextLine() + "is not in the list");
+                }
+                else
+                {
+                    System.out.println(ptemp.toString());
                 }
             }
         }while(menuchoice != 0);
 
     }
+
+    //main method for program to run
     public static void main(String args[])
     {
         ContactList nContactList = new ContactList();
