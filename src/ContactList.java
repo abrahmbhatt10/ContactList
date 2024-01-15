@@ -133,7 +133,7 @@ public class ContactList {
         System.out.println("7. Search By last Name");
         System.out.println("8. Search By Phone Number");
         System.out.println("9. Exit");
-        if(s.nextLine().equals(1))
+        if(s.nextLine().equals("1"))
         {
             System.out.println("Select a type of contact to add: ");
             System.out.println("1. Student");
@@ -157,23 +157,23 @@ public class ContactList {
                 String tclass = s.nextLine();
             }
         }
-        if(s.nextLine().equals(2))
+        if(s.nextLine().equals("2"))
         {
             sort(1);
         }
-        if(s.nextLine().equals(3))
+        if(s.nextLine().equals("3"))
         {
             sort(2);
         }
-        if(s.nextLine().equals(4))
+        if(s.nextLine().equals("4"))
         {
             sort(3);
         }
-        if(s.nextLine().equals(5))
+        if(s.nextLine().equals("5"))
         {
             listStudents();
         }
-        if(s.nextLine().equals(6))
+        if(s.nextLine().equals("6"))
         {
             System.out.println("Enter a name: ");
             searchByFirstName(s.nextLine());
@@ -182,7 +182,7 @@ public class ContactList {
                 System.out.println(s.nextLine() + "is not in the list");
             }
         }
-        if(s.nextLine().equals(7))
+        if(s.nextLine().equals("7"))
         {
             System.out.println("Enter a name: ");
             searchByLastName(s.nextLine());
@@ -191,7 +191,7 @@ public class ContactList {
                 System.out.println(s.nextLine() + "is not in the list");
             }
         }
-        if(s.nextLine().equals(8))
+        if(s.nextLine().equals("8"))
         {
             System.out.println("Enter a phone number: ");
             searchByPhoneNumber(s.nextLine());
@@ -200,33 +200,16 @@ public class ContactList {
                 System.out.println(s.nextLine() + "is not in the list");
             }
         }
-        if(s.nextLine().equals(9))
+        if(s.nextLine().equals("9"))
         {
             System.out.println("Goodbye");
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public static void main (String args[])
+    {
+        ArrayList<Person> personArr = new ArrayList<Person>();
+        ContactList nContactList = new ContactList(personArr);
+        nContactList.run();
+    }
 }
